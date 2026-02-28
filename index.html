@@ -1,0 +1,647 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>E-Commerce Platform — Project Plan</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: 'Segoe UI', Arial, sans-serif; color: #1a1a2e; background: #f0f4f8; }
+
+  .cover {
+    background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+    color: white; padding: 80px 60px; min-height: 300px;
+    display: flex; flex-direction: column; justify-content: center;
+  }
+  .cover .badge { background: #e94560; color: white; font-size: 11px; font-weight: 700;
+    letter-spacing: 2px; padding: 6px 16px; border-radius: 20px; display: inline-block; margin-bottom: 24px; text-transform: uppercase; }
+  .cover h1 { font-size: 42px; font-weight: 800; line-height: 1.2; margin-bottom: 16px; }
+  .cover h1 span { color: #e94560; }
+  .cover p { font-size: 16px; color: #a8b2c1; max-width: 600px; line-height: 1.7; }
+  .cover .meta { margin-top: 32px; display: flex; gap: 40px; flex-wrap: wrap; }
+  .cover .meta-item { font-size: 13px; }
+  .cover .meta-item .label { color: #a8b2c1; text-transform: uppercase; letter-spacing: 1px; font-size: 11px; margin-bottom: 4px; }
+  .cover .meta-item .value { color: white; font-weight: 700; font-size: 15px; }
+
+  .container { max-width: 1100px; margin: 0 auto; padding: 40px 30px; }
+
+  .section { background: white; border-radius: 12px; padding: 36px; margin-bottom: 28px;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.07); }
+  .section-header { display: flex; align-items: center; gap: 14px; margin-bottom: 28px; padding-bottom: 18px;
+    border-bottom: 2px solid #f0f4f8; }
+  .section-icon { width: 44px; height: 44px; border-radius: 10px; display: flex; align-items: center;
+    justify-content: center; font-size: 20px; flex-shrink: 0; }
+  .icon-blue { background: #e8f0fe; }
+  .icon-red { background: #fce8e8; }
+  .icon-green { background: #e8f5e9; }
+  .icon-purple { background: #f3e8ff; }
+  .icon-orange { background: #fff3e0; }
+  .icon-teal { background: #e0f7fa; }
+  .section-title { font-size: 22px; font-weight: 700; color: #1a1a2e; }
+  .section-subtitle { font-size: 13px; color: #6b7280; margin-top: 2px; }
+
+  h3 { font-size: 16px; font-weight: 700; color: #1a1a2e; margin: 22px 0 12px; }
+  p { font-size: 14px; line-height: 1.8; color: #374151; margin-bottom: 14px; }
+  
+  /* Summary Cards */
+  .summary-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 18px; margin-bottom: 0; }
+  .summary-card { background: linear-gradient(135deg, #1a1a2e, #0f3460); color: white;
+    border-radius: 10px; padding: 24px 20px; text-align: center; }
+  .summary-card .num { font-size: 36px; font-weight: 800; color: #e94560; line-height: 1; }
+  .summary-card .unit { font-size: 13px; color: #a8b2c1; margin-top: 4px; }
+  .summary-card .label { font-size: 12px; color: #d1d5db; margin-top: 8px; text-transform: uppercase; letter-spacing: 0.5px; }
+
+  /* Panel Cards */
+  .panels-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+  .panel-card { border: 2px solid #f0f4f8; border-radius: 10px; padding: 22px; }
+  .panel-card.super-admin { border-color: #e94560; }
+  .panel-card.admin { border-color: #0f3460; }
+  .panel-card.sub-customer { border-color: #7c3aed; }
+  .panel-card.normal-customer { border-color: #059669; }
+  .panel-title { font-size: 15px; font-weight: 700; margin-bottom: 6px; }
+  .panel-badge { font-size: 11px; padding: 3px 10px; border-radius: 20px; display: inline-block; margin-bottom: 14px; font-weight: 600; }
+  .badge-red { background: #fce8e8; color: #e94560; }
+  .badge-blue { background: #e8f0fe; color: #0f3460; }
+  .badge-purple { background: #f3e8ff; color: #7c3aed; }
+  .badge-green { background: #e8f5e9; color: #059669; }
+  .panel-list { list-style: none; }
+  .panel-list li { font-size: 13px; color: #374151; padding: 4px 0; display: flex; align-items: flex-start; gap: 8px; }
+  .panel-list li::before { content: "→"; color: #9ca3af; flex-shrink: 0; margin-top: 1px; }
+
+  /* Tech Stack */
+  .tech-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+  .tech-item { background: #f9fafb; border-radius: 8px; padding: 16px; border-left: 4px solid #e94560; }
+  .tech-item .tech-name { font-size: 14px; font-weight: 700; color: #1a1a2e; }
+  .tech-item .tech-value { font-size: 13px; color: #6b7280; margin-top: 3px; }
+
+  /* Sprint Table */
+  table { width: 100%; border-collapse: collapse; font-size: 13px; }
+  thead { background: linear-gradient(135deg, #1a1a2e, #0f3460); color: white; }
+  th { padding: 12px 14px; text-align: left; font-weight: 600; font-size: 12px; text-transform: uppercase; letter-spacing: 0.5px; }
+  td { padding: 11px 14px; border-bottom: 1px solid #f0f4f8; vertical-align: top; }
+  tr:last-child td { border-bottom: none; }
+  tr:nth-child(even) td { background: #f9fafb; }
+  .sprint-num { font-weight: 700; color: #0f3460; white-space: nowrap; }
+  .days-badge { background: #e94560; color: white; font-size: 11px; font-weight: 700; padding: 2px 8px; border-radius: 10px; white-space: nowrap; }
+  .dev-tag { background: #e8f0fe; color: #0f3460; font-size: 11px; font-weight: 600; padding: 2px 8px; border-radius: 4px; display: inline-block; margin: 1px; }
+  .status-tag { font-size: 11px; padding: 3px 8px; border-radius: 10px; font-weight: 600; display: inline-block; }
+  .free { background: #dcfce7; color: #166534; }
+  .premium { background: #fef3c7; color: #92400e; }
+  .core { background: #e0e7ff; color: #3730a3; }
+
+  /* Feature Lock Table */
+  .feature-table td:first-child { font-weight: 600; color: #1a1a2e; }
+  
+  /* Dev Roles */
+  .dev-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
+  .dev-card { border-radius: 10px; padding: 22px; border: 2px solid #f0f4f8; }
+  .dev-card .dev-role { font-size: 16px; font-weight: 800; color: #1a1a2e; margin-bottom: 4px; }
+  .dev-card .dev-title { font-size: 12px; color: #6b7280; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 14px; }
+  .skill-tag { background: #f0f4f8; color: #374151; font-size: 12px; padding: 4px 10px; border-radius: 6px; display: inline-block; margin: 3px 2px; }
+
+  /* Timeline bar */
+  .timeline { display: flex; gap: 0; margin: 20px 0; border-radius: 8px; overflow: hidden; }
+  .tl-block { padding: 12px 16px; text-align: center; color: white; font-size: 12px; font-weight: 700; flex: 1; }
+  .tl-label { font-size: 10px; opacity: 0.85; margin-top: 3px; text-transform: uppercase; letter-spacing: 0.5px; }
+
+  /* Hosting */
+  .hosting-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+  .hosting-card { border: 2px solid #f0f4f8; border-radius: 10px; padding: 20px; }
+  .hosting-card.recommended { border-color: #e94560; }
+  .hosting-card.recommended .rec-badge { background: #e94560; color: white; font-size: 11px; padding: 3px 10px; border-radius: 10px; font-weight: 700; display: inline-block; margin-bottom: 10px; }
+  .hosting-name { font-size: 16px; font-weight: 800; color: #1a1a2e; margin-bottom: 4px; }
+  .hosting-price { font-size: 13px; color: #6b7280; margin-bottom: 12px; }
+  .hosting-list { list-style: none; }
+  .hosting-list li { font-size: 12px; color: #374151; padding: 3px 0; }
+  .hosting-list li::before { content: "✓ "; color: #059669; font-weight: 700; }
+
+  /* License Model */
+  .license-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+  .license-card { border-radius: 10px; padding: 24px; }
+  .license-card.open { background: #e8f5e9; border: 2px solid #059669; }
+  .license-card.premium-c { background: #fff3e0; border: 2px solid #f59e0b; }
+  .license-card.saas { background: #e8f0fe; border: 2px solid #0f3460; }
+  .license-title { font-size: 18px; font-weight: 800; margin-bottom: 12px; }
+  .license-card.open .license-title { color: #166534; }
+  .license-card.premium-c .license-title { color: #92400e; }
+  .license-card.saas .license-title { color: #0f3460; }
+
+  /* Risk table */
+  .risk-high { color: #e94560; font-weight: 700; }
+  .risk-med { color: #f59e0b; font-weight: 700; }
+  .risk-low { color: #059669; font-weight: 700; }
+
+  /* Footer */
+  .doc-footer { text-align: center; padding: 30px; color: #9ca3af; font-size: 13px; background: white; border-radius: 12px; margin-top: 28px; }
+  
+  @media print { body { background: white; } .cover { min-height: 200px; padding: 40px; } }
+</style>
+</head>
+<body>
+
+<!-- COVER -->
+<div class="cover">
+  <div class="badge">Agile Project Plan · v1.0</div>
+  <h1>Open-Source <span>E-Commerce</span> Platform</h1>
+  <p>A complete SaaS-ready e-commerce system with Super Admin, Admin, Website-Subscription Customer, and Normal Customer panels — built with Laravel, React, Tailwind CSS & MySQL.</p>
+  <div class="meta">
+    <div class="meta-item"><div class="label">Team Size</div><div class="value">3 Developers</div></div>
+    <div class="meta-item"><div class="label">Estimated Duration</div><div class="value">~180 Days</div></div>
+    <div class="meta-item"><div class="label">Methodology</div><div class="value">Agile / Scrum</div></div>
+    <div class="meta-item"><div class="label">Sprint Length</div><div class="value">2 Weeks</div></div>
+    <div class="meta-item"><div class="label">Total Sprints</div><div class="value">18 Sprints</div></div>
+  </div>
+</div>
+
+<div class="container">
+
+  <!-- SUMMARY NUMBERS -->
+  <div class="section">
+    <div class="summary-grid">
+      <div class="summary-card"><div class="num">4</div><div class="unit">panels</div><div class="label">Super Admin · Admin · Sub Customer · Normal Customer</div></div>
+      <div class="summary-card"><div class="num">60+</div><div class="unit">DB tables</div><div class="label">Complete MySQL Schema</div></div>
+      <div class="summary-card"><div class="num">80+</div><div class="unit">API endpoints</div><div class="label">REST API v1</div></div>
+      <div class="summary-card"><div class="num">~180</div><div class="unit">days</div><div class="label">3 Developers · Full Build</div></div>
+    </div>
+  </div>
+
+  <!-- SYSTEM OVERVIEW -->
+  <div class="section">
+    <div class="section-header">
+      <div class="section-icon icon-blue">🏗️</div>
+      <div><div class="section-title">System Architecture & Panel Overview</div>
+      <div class="section-subtitle">Four user types, one unified backend</div></div>
+    </div>
+    <div class="panels-grid">
+      <div class="panel-card super-admin">
+        <div class="panel-title">🔴 Super Admin Panel</div>
+        <div class="panel-badge badge-red">Platform Owner</div>
+        <ul class="panel-list">
+          <li>Manage all website-subscription customers (tenants)</li>
+          <li>Create & configure feature packages (Free / Premium)</li>
+          <li>Assign/revoke premium features per tenant</li>
+          <li>Global platform settings & license management</li>
+          <li>Revenue dashboard (subscriptions, renewals)</li>
+          <li>Manage all admins and their permissions</li>
+          <li>System-wide analytics & health monitoring</li>
+          <li>Update/deployment management</li>
+        </ul>
+      </div>
+      <div class="panel-card admin">
+        <div class="panel-title">🔵 Admin Panel (Tenant Admin)</div>
+        <div class="panel-badge badge-blue">Store Owner / Manager</div>
+        <ul class="panel-list">
+          <li>Full product & category management</li>
+          <li>Order processing & fulfilment</li>
+          <li>Inventory management & low-stock alerts</li>
+          <li>Customer management & reviews</li>
+          <li>Marketing: coupons, campaigns, banners</li>
+          <li>Shipping & courier integration</li>
+          <li>Reports & analytics dashboard</li>
+          <li>Only sees features unlocked by Super Admin</li>
+        </ul>
+      </div>
+      <div class="panel-card sub-customer">
+        <div class="panel-title">🟣 Website Subscription Customer</div>
+        <div class="panel-badge badge-purple">Paying SaaS Tenant</div>
+        <ul class="panel-list">
+          <li>Gets an isolated e-commerce storefront</li>
+          <li>Access only to features they subscribed for</li>
+          <li>Basic features free; premium features unlocked on payment</li>
+          <li>Self-service settings: theme, branding, domain</li>
+          <li>Their own customers (Normal Customers) shop here</li>
+          <li>Billing & subscription management portal</li>
+          <li>Feature request & upgrade flow</li>
+        </ul>
+      </div>
+      <div class="panel-card normal-customer">
+        <div class="panel-title">🟢 Normal Customer (End Shopper)</div>
+        <div class="panel-badge badge-green">End User / Shopper</div>
+        <ul class="panel-list">
+          <li>Browses & shops on a tenant's storefront</li>
+          <li>Registration, login, social login</li>
+          <li>Cart, checkout, order tracking</li>
+          <li>Wishlist, reviews, recently viewed</li>
+          <li>Address book & profile management</li>
+          <li>Access only to features the tenant has unlocked</li>
+          <li>Payment via COD, bKash, Shurjopay, etc.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- OPEN SOURCE + PREMIUM MODEL -->
+  <div class="section">
+    <div class="section-header">
+      <div class="section-icon icon-orange">🔓</div>
+      <div><div class="section-title">Open-Source + Freemium Feature Model</div>
+      <div class="section-subtitle">What's free, what's locked, how the business model works</div></div>
+    </div>
+    <div class="license-grid">
+      <div class="license-card open">
+        <div class="license-title">✅ Free / Open-Source Core</div>
+        <p style="font-size:13px; color:#166534;">Anyone can clone, deploy, and use these without paying:</p>
+        <ul class="panel-list" style="margin-top:8px;">
+          <li style="font-size:13px; color:#166534;">Product catalog (unlimited products)</li>
+          <li style="font-size:13px; color:#166534;">3-level category & brand management</li>
+          <li style="font-size:13px; color:#166534;">Basic order management (CRUD)</li>
+          <li style="font-size:13px; color:#166534;">Customer registration & login (JWT)</li>
+          <li style="font-size:13px; color:#166534;">Shopping cart & basic checkout</li>
+          <li style="font-size:13px; color:#166534;">Cash on delivery payment</li>
+          <li style="font-size:13px; color:#166534;">Basic admin dashboard</li>
+          <li style="font-size:13px; color:#166534;">REST API (core endpoints)</li>
+          <li style="font-size:13px; color:#166534;">Basic SEO & meta tags</li>
+          <li style="font-size:13px; color:#166534;">Contact form & custom pages</li>
+        </ul>
+      </div>
+      <div class="license-card premium-c">
+        <div class="license-title">🔒 Premium (Paid / Unlockable)</div>
+        <p style="font-size:13px; color:#92400e;">Website subscription customers unlock these based on their chosen plan:</p>
+        <ul class="panel-list" style="margin-top:8px;">
+          <li style="font-size:13px; color:#92400e;">Multi-payment gateways (bKash, Shurjopay)</li>
+          <li style="font-size:13px; color:#92400e;">Courier API integration (Pathao, Steadfast)</li>
+          <li style="font-size:13px; color:#92400e;">Advanced analytics & reports</li>
+          <li style="font-size:13px; color:#92400e;">Email/SMS notifications</li>
+          <li style="font-size:13px; color:#92400e;">Abandoned cart recovery</li>
+          <li style="font-size:13px; color:#92400e;">Social login (Google, Facebook)</li>
+          <li style="font-size:13px; color:#92400e;">Bulk product import/export</li>
+          <li style="font-size:13px; color:#92400e;">Campaign & coupon management</li>
+          <li style="font-size:13px; color:#92400e;">Pixel integrations (FB, TikTok, GA)</li>
+          <li style="font-size:13px; color:#92400e;">Multi-warehouse & supplier mgmt</li>
+          <li style="font-size:13px; color:#92400e;">WhatsApp notifications</li>
+          <li style="font-size:13px; color:#92400e;">Advanced inventory (stock history)</li>
+          <li style="font-size:13px; color:#92400e;">Product comparison & wishlists</li>
+          <li style="font-size:13px; color:#92400e;">Custom theme & branding</li>
+        </ul>
+      </div>
+    </div>
+    <div class="license-card saas" style="margin-top:16px;">
+      <div class="license-title">⚙️ Feature Toggle Mechanism</div>
+      <p style="font-size:13px; color:#0f3460; margin-bottom:0;">The <strong>feature_toggles</strong> table (already in schema) acts as the feature gate. Super Admin sets which features are enabled per tenant. The API endpoint <code>/api/v1/feature-toggles</code> serves the active feature list to the React frontend, which shows/hides UI accordingly. No code changes needed — pure database-driven toggle system.</p>
+    </div>
+  </div>
+
+  <!-- TECH STACK -->
+  <div class="section">
+    <div class="section-header">
+      <div class="section-icon icon-teal">⚙️</div>
+      <div><div class="section-title">Technology Stack</div>
+      <div class="section-subtitle">Full-stack choices and justifications</div></div>
+    </div>
+    <div class="tech-grid">
+      <div class="tech-item"><div class="tech-name">Laravel 11.x</div><div class="tech-value">Backend API + Admin · PHP 8.2+ · REST API + Sanctum/JWT auth</div></div>
+      <div class="tech-item"><div class="tech-name">React 18 + Vite</div><div class="tech-value">Customer storefronts + Super Admin SPA · Fast HMR, component-based</div></div>
+      <div class="tech-item"><div class="tech-name">Tailwind CSS 3</div><div class="tech-value">Utility-first styling · Rapid UI development · Consistent design system</div></div>
+      <div class="tech-item"><div class="tech-name">MySQL 8.0+</div><div class="tech-value">Primary database · 60+ tables · InnoDB transactions</div></div>
+      <div class="tech-item"><div class="tech-name">Spatie Permission</div><div class="tech-value">Role-based access control for Super Admin / Admin / Staff roles</div></div>
+      <div class="tech-item"><div class="tech-name">Laravel Sanctum / JWT</div><div class="tech-value">API token auth for React frontend + mobile-ready JWT for customers</div></div>
+      <div class="tech-item"><div class="tech-name">Redis (Queue + Cache)</div><div class="tech-value">Job queues for emails/SMS · Session cache · API response caching</div></div>
+      <div class="tech-item"><div class="tech-name">Laravel Modules</div><div class="tech-value">Modular architecture for clean separation of premium vs free features</div></div>
+      <div class="tech-item"><div class="tech-name">Inertia.js (optional)</div><div class="tech-value">Admin panel alternative for tightly coupled Laravel + React if preferred</div></div>
+      <div class="tech-item"><div class="tech-name">Intervention Image</div><div class="tech-value">Image resize, crop, optimization on upload</div></div>
+      <div class="tech-item"><div class="tech-name">GitHub Actions / CI</div><div class="tech-value">Automated testing, linting, deployment pipeline</div></div>
+      <div class="tech-item"><div class="tech-name">Docker (Dev env)</div><div class="tech-value">Consistent local dev environment across all 3 developers</div></div>
+    </div>
+  </div>
+
+  <!-- TEAM ROLES -->
+  <div class="section">
+    <div class="section-header">
+      <div class="section-icon icon-purple">👥</div>
+      <div><div class="section-title">Team Structure (3 Developers)</div>
+      <div class="section-subtitle">Roles, responsibilities and skill requirements</div></div>
+    </div>
+    <div class="dev-grid">
+      <div class="dev-card">
+        <div class="dev-role">Developer 1</div>
+        <div class="dev-title">Backend Lead / Architect</div>
+        <p style="font-size:13px; color:#374151; margin-bottom:12px;">Owns the Laravel backend, database design, API architecture, security, and feature toggle system.</p>
+        <div><span class="skill-tag">Laravel 11</span><span class="skill-tag">MySQL</span><span class="skill-tag">REST API</span><span class="skill-tag">JWT/Sanctum</span><span class="skill-tag">Spatie ACL</span><span class="skill-tag">Redis</span><span class="skill-tag">Payment APIs</span><span class="skill-tag">Courier APIs</span></div>
+      </div>
+      <div class="dev-card">
+        <div class="dev-role">Developer 2</div>
+        <div class="dev-title">Frontend Lead</div>
+        <p style="font-size:13px; color:#374151; margin-bottom:12px;">Owns the React storefronts (customer-facing) and the Super Admin SPA. Implements feature toggle driven UI.</p>
+        <div><span class="skill-tag">React 18</span><span class="skill-tag">Tailwind CSS</span><span class="skill-tag">Vite</span><span class="skill-tag">React Query</span><span class="skill-tag">Zustand/Redux</span><span class="skill-tag">Axios</span><span class="skill-tag">Recharts</span></div>
+      </div>
+      <div class="dev-card">
+        <div class="dev-role">Developer 3</div>
+        <div class="dev-title">Full-Stack / DevOps</div>
+        <p style="font-size:13px; color:#374151; margin-bottom:12px;">Owns the Admin panel (React or Inertia), integrations (payment, courier, SMS, email), testing, and deployment pipelines.</p>
+        <div><span class="skill-tag">React / Inertia</span><span class="skill-tag">Laravel</span><span class="skill-tag">GitHub Actions</span><span class="skill-tag">Docker</span><span class="skill-tag">Nginx</span><span class="skill-tag">SMS/Email APIs</span><span class="skill-tag">PHPUnit</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- AGILE SPRINT PLAN -->
+  <div class="section">
+    <div class="section-header">
+      <div class="section-icon icon-red">📅</div>
+      <div><div class="section-title">Agile Sprint Plan (18 Sprints · ~180 Days)</div>
+      <div class="section-subtitle">2-week sprints · Daily standups · Sprint review every 2 weeks</div></div>
+    </div>
+    
+    <div class="timeline">
+      <div class="tl-block" style="background:#1a1a2e; flex:2;">Phase 1<div class="tl-label">Foundation (Sprints 1–3)</div></div>
+      <div class="tl-block" style="background:#0f3460; flex:3;">Phase 2<div class="tl-label">Core Features (Sprints 4–8)</div></div>
+      <div class="tl-block" style="background:#7c3aed; flex:3;">Phase 3<div class="tl-label">Advanced (Sprints 9–13)</div></div>
+      <div class="tl-block" style="background:#e94560; flex:2;">Phase 4<div class="tl-label">Premium (Sprints 14–16)</div></div>
+      <div class="tl-block" style="background:#059669; flex:2;">Phase 5<div class="tl-label">Polish & Launch (17–18)</div></div>
+    </div>
+
+    <table>
+      <thead>
+        <tr>
+          <th>Sprint</th>
+          <th>Duration</th>
+          <th>Goals & Deliverables</th>
+          <th>Who</th>
+          <th>Type</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="sprint-num">Sprint 1</td>
+          <td><span class="days-badge">Days 1–10</span></td>
+          <td><strong>Project Setup & Foundation</strong><br>Docker dev environment, Laravel project scaffold, MySQL schema (60+ tables migration), React + Vite + Tailwind setup, GitHub repo structure, CI/CD pipeline, API skeleton, Spatie permission roles setup</td>
+          <td><span class="dev-tag">Dev1</span><span class="dev-tag">Dev2</span><span class="dev-tag">Dev3</span></td>
+          <td><span class="status-tag core">Core</span></td>
+        </tr>
+        <tr>
+          <td class="sprint-num">Sprint 2</td>
+          <td><span class="days-badge">Days 11–20</span></td>
+          <td><strong>Authentication & User Management</strong><br>Super Admin auth, Admin auth, Customer JWT auth, role-based access control, feature_toggles table seeding, password reset, email verification, OTP system</td>
+          <td><span class="dev-tag">Dev1</span><span class="dev-tag">Dev3</span></td>
+          <td><span class="status-tag core">Core</span></td>
+        </tr>
+        <tr>
+          <td class="sprint-num">Sprint 3</td>
+          <td><span class="days-badge">Days 21–30</span></td>
+          <td><strong>Product & Category APIs</strong><br>Product CRUD API (all 15 product endpoints), Category 3-level hierarchy, Brand management, Tag management, Image upload + optimization, Product variants, SKU & barcode generation</td>
+          <td><span class="dev-tag">Dev1</span><span class="dev-tag">Dev2</span></td>
+          <td><span class="status-tag free">Free</span></td>
+        </tr>
+        <tr>
+          <td class="sprint-num">Sprint 4</td>
+          <td><span class="days-badge">Days 31–40</span></td>
+          <td><strong>Customer Storefront – Product Pages</strong><br>React storefront: Home page, product listing, product detail page, category browsing, search, price filtering, sorting, brand filter, responsive layout, Tailwind design system</td>
+          <td><span class="dev-tag">Dev2</span><span class="dev-tag">Dev3</span></td>
+          <td><span class="status-tag free">Free</span></td>
+        </tr>
+        <tr>
+          <td class="sprint-num">Sprint 5</td>
+          <td><span class="days-badge">Days 41–50</span></td>
+          <td><strong>Cart, Checkout & Orders (Free Tier)</strong><br>Shopping cart API + React UI, Guest & logged-in checkout, COD payment, Order placement, Order confirmation email, Order tracking by ID, Order status flow, Invoice PDF generation</td>
+          <td><span class="dev-tag">Dev1</span><span class="dev-tag">Dev2</span></td>
+          <td><span class="status-tag free">Free</span></td>
+        </tr>
+        <tr>
+          <td class="sprint-num">Sprint 6</td>
+          <td><span class="days-badge">Days 51–60</span></td>
+          <td><strong>Admin Panel – Core</strong><br>React Admin Panel: Dashboard with KPIs, product management UI, category/brand UI, order list + detail + status update, customer list, basic reports (sales/orders), settings page</td>
+          <td><span class="dev-tag">Dev2</span><span class="dev-tag">Dev3</span></td>
+          <td><span class="status-tag free">Free</span></td>
+        </tr>
+        <tr>
+          <td class="sprint-num">Sprint 7</td>
+          <td><span class="days-badge">Days 61–70</span></td>
+          <td><strong>Customer Panel & Profile</strong><br>Customer login/register UI, profile management, address book, order history, wishlist, recently viewed, review submission, account settings, password change, email preferences</td>
+          <td><span class="dev-tag">Dev2</span><span class="dev-tag">Dev1</span></td>
+          <td><span class="status-tag free">Free</span></td>
+        </tr>
+        <tr>
+          <td class="sprint-num">Sprint 8</td>
+          <td><span class="days-badge">Days 71–80</span></td>
+          <td><strong>Inventory & Shipping (Free)</strong><br>Inventory management (stock tracking, alerts, history), district/area management, flat-rate shipping, shipping charge API, supplier management, warehouse management, low stock notifications</td>
+          <td><span class="dev-tag">Dev1</span><span class="dev-tag">Dev3</span></td>
+          <td><span class="status-tag free">Free</span></td>
+        </tr>
+        <tr>
+          <td class="sprint-num">Sprint 9</td>
+          <td><span class="days-badge">Days 81–90</span></td>
+          <td><strong>Super Admin Panel</strong><br>Super Admin dashboard, tenant (website-subscription customer) management, subscription/feature package CRUD, feature toggle assignment per tenant, global settings, tenant billing management, revenue overview</td>
+          <td><span class="dev-tag">Dev2</span><span class="dev-tag">Dev1</span></td>
+          <td><span class="status-tag core">Core</span></td>
+        </tr>
+        <tr>
+          <td class="sprint-num">Sprint 10</td>
+          <td><span class="days-badge">Days 91–100</span></td>
+          <td><strong>Premium Payments</strong><br>bKash integration, Shurjopay integration, Bank transfer, Custom payment methods, Payment status tracking, Transaction logs, Refund processing, Partial payments, Payment receipts, Payment gateway config UI</td>
+          <td><span class="dev-tag">Dev1</span><span class="dev-tag">Dev3</span></td>
+          <td><span class="status-tag premium">Premium</span></td>
+        </tr>
+        <tr>
+          <td class="sprint-num">Sprint 11</td>
+          <td><span class="days-badge">Days 101–110</span></td>
+          <td><strong>Courier & Advanced Shipping</strong><br>Pathao Courier API integration, Steadfast Courier API, Bulk order submission to courier, Auto tracking, Shipping label generation, Weight-based shipping, Courier selection UI, Pickup scheduling</td>
+          <td><span class="dev-tag">Dev1</span><span class="dev-tag">Dev3</span></td>
+          <td><span class="status-tag premium">Premium</span></td>
+        </tr>
+        <tr>
+          <td class="sprint-num">Sprint 12</td>
+          <td><span class="days-badge">Days 111–120</span></td>
+          <td><strong>Marketing & Promotions</strong><br>Coupon system (%, fixed, free shipping), Campaign management, Flash sales, Banners & sliders management, Special offers, Abandoned cart (incomplete orders) system, Lead capture, Follow-up system</td>
+          <td><span class="dev-tag">Dev1</span><span class="dev-tag">Dev2</span></td>
+          <td><span class="status-tag premium">Premium</span></td>
+        </tr>
+        <tr>
+          <td class="sprint-num">Sprint 13</td>
+          <td><span class="days-badge">Days 121–130</span></td>
+          <td><strong>Notifications & Communication</strong><br>Email notification system (order status, OTP, marketing), SMS gateway integration, WhatsApp notification settings, Push notification ready architecture, Notification templates, Order notification settings</td>
+          <td><span class="dev-tag">Dev3</span><span class="dev-tag">Dev1</span></td>
+          <td><span class="status-tag premium">Premium</span></td>
+        </tr>
+        <tr>
+          <td class="sprint-num">Sprint 14</td>
+          <td><span class="days-badge">Days 131–140</span></td>
+          <td><strong>Analytics, Pixels & Tracking</strong><br>Built-in analytics dashboard, Sales/revenue/customer reports, Google Analytics integration, Facebook Pixel, TikTok Pixel, Google Tag Manager, Custom pixels, Event tracking, Export reports (PDF/Excel/CSV)</td>
+          <td><span class="dev-tag">Dev2</span><span class="dev-tag">Dev1</span></td>
+          <td><span class="status-tag premium">Premium</span></td>
+        </tr>
+        <tr>
+          <td class="sprint-num">Sprint 15</td>
+          <td><span class="days-badge">Days 141–150</span></td>
+          <td><strong>Content, CMS & Social Login</strong><br>Custom page builder, Rich text editor, FAQ management, Newsletter signup, Social login (Google, Facebook), Footer/header menu builder, Testimonials, Notices/announcements, Media library</td>
+          <td><span class="dev-tag">Dev2</span><span class="dev-tag">Dev3</span></td>
+          <td><span class="status-tag premium">Premium</span></td>
+        </tr>
+        <tr>
+          <td class="sprint-num">Sprint 16</td>
+          <td><span class="days-badge">Days 151–160</span></td>
+          <td><strong>Bulk Operations & Import/Export</strong><br>Bulk product import (CSV/Excel), Bulk export, Product duplication, Bulk order processing, Bulk status updates, Expense management, Purchase records, IP block management, Security hardening</td>
+          <td><span class="dev-tag">Dev1</span><span class="dev-tag">Dev3</span></td>
+          <td><span class="status-tag premium">Premium</span></td>
+        </tr>
+        <tr>
+          <td class="sprint-num">Sprint 17</td>
+          <td><span class="days-badge">Days 161–170</span></td>
+          <td><strong>Testing, Bug Fixes & Performance</strong><br>PHPUnit API tests (80+ endpoints), React component testing, Load testing, Query optimization (N+1 fixes), Redis caching layer, Image CDN setup, Security audit (XSS, CSRF, SQL injection), API rate limiting</td>
+          <td><span class="dev-tag">Dev1</span><span class="dev-tag">Dev2</span><span class="dev-tag">Dev3</span></td>
+          <td><span class="status-tag core">Core</span></td>
+        </tr>
+        <tr>
+          <td class="sprint-num">Sprint 18</td>
+          <td><span class="days-badge">Days 171–180</span></td>
+          <td><strong>Documentation, Open-Source Release & Deployment</strong><br>API documentation (Swagger/Postman), README + installation guide, Open-source GitHub release, Docker Compose for easy deployment, Production deployment to hosting, Demo store setup, Changelog</td>
+          <td><span class="dev-tag">Dev1</span><span class="dev-tag">Dev2</span><span class="dev-tag">Dev3</span></td>
+          <td><span class="status-tag core">Core</span></td>
+        </tr>
+      </tbody>
+    </table>
+    <p style="margin-top:18px; font-size:13px; color:#6b7280;">
+      <strong>Note:</strong> Each sprint includes: Sprint Planning (Day 1), Daily Standups, Mid-sprint demo, Sprint Review + Retrospective (Day 10). Sprints can run in parallel where Dev1 (backend) finishes an API and Dev2 (frontend) immediately starts consuming it.
+    </p>
+  </div>
+
+  <!-- HOSTING RECOMMENDATIONS -->
+  <div class="section">
+    <div class="section-header">
+      <div class="section-icon icon-green">🌐</div>
+      <div><div class="section-title">Hosting Recommendations</div>
+      <div class="section-subtitle">Best options for a Laravel + React + MySQL stack at scale</div></div>
+    </div>
+    <div class="hosting-grid">
+      <div class="hosting-card recommended">
+        <div class="rec-badge">⭐ Best Choice</div>
+        <div class="hosting-name">DigitalOcean</div>
+        <div class="hosting-price">From $24/mo (4GB droplet) · Managed DB extra</div>
+        <ul class="hosting-list">
+          <li>Managed MySQL database (automated backups)</li>
+          <li>Managed Redis for queues & caching</li>
+          <li>Object Storage (Spaces) for media files</li>
+          <li>App Platform for zero-downtime deploys</li>
+          <li>Simple, predictable pricing</li>
+          <li>Laravel-friendly Nginx stacks</li>
+          <li>Great for multi-tenant SaaS</li>
+        </ul>
+      </div>
+      <div class="hosting-card recommended">
+        <div class="rec-badge">⭐ Best for Scale</div>
+        <div class="hosting-name">AWS (EC2 + RDS)</div>
+        <div class="hosting-price">From $40–80/mo (t3.medium + RDS)</div>
+        <ul class="hosting-list">
+          <li>RDS MySQL with read replicas for scale</li>
+          <li>ElastiCache (Redis) managed service</li>
+          <li>S3 + CloudFront CDN for media</li>
+          <li>Elastic Load Balancer for traffic spikes</li>
+          <li>Auto-scaling groups</li>
+          <li>SES for transactional emails</li>
+          <li>Best for high-growth, multi-tenant SaaS</li>
+        </ul>
+      </div>
+      <div class="hosting-card">
+        <div class="hosting-name">Vultr / Hetzner</div>
+        <div class="hosting-price">From $12–20/mo · Budget-friendly</div>
+        <ul class="hosting-list">
+          <li>Good performance per dollar</li>
+          <li>SSD VPS with full root access</li>
+          <li>Managed DB add-ons available</li>
+          <li>Object storage for media</li>
+          <li>Manual server management required</li>
+          <li>Good for initial launch / MVP</li>
+          <li>Hetzner excellent for EU/Asia regions</li>
+        </ul>
+      </div>
+    </div>
+    
+    <h3 style="margin-top:24px;">Recommended Production Stack Architecture</h3>
+    <table style="margin-top:12px;">
+      <thead><tr><th>Component</th><th>Service</th><th>Purpose</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Web Server</strong></td><td>Nginx on Ubuntu 22.04</td><td>Laravel API + React static files</td></tr>
+        <tr><td><strong>PHP Runtime</strong></td><td>PHP-FPM 8.2</td><td>Laravel application server</td></tr>
+        <tr><td><strong>Database</strong></td><td>Managed MySQL 8.0 (DigitalOcean / RDS)</td><td>Primary data store</td></tr>
+        <tr><td><strong>Cache + Queue</strong></td><td>Managed Redis</td><td>Laravel queues, session cache, API cache</td></tr>
+        <tr><td><strong>File Storage</strong></td><td>S3 / Spaces + CloudFront/CDN</td><td>Product images, documents, exports</td></tr>
+        <tr><td><strong>Email</strong></td><td>AWS SES / Mailgun</td><td>Transactional emails (order confirmations, OTP)</td></tr>
+        <tr><td><strong>SSL</strong></td><td>Let's Encrypt / Cloudflare</td><td>HTTPS for all domains</td></tr>
+        <tr><td><strong>Monitoring</strong></td><td>UptimeRobot + Laravel Telescope</td><td>Uptime alerts, query & error monitoring</td></tr>
+        <tr><td><strong>CI/CD</strong></td><td>GitHub Actions → server deploy</td><td>Automated test + deploy on push to main</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- RISK REGISTER -->
+  <div class="section">
+    <div class="section-header">
+      <div class="section-icon icon-red">⚠️</div>
+      <div><div class="section-title">Risk Register & Mitigation</div>
+      <div class="section-subtitle">Key project risks and how to handle them</div></div>
+    </div>
+    <table>
+      <thead><tr><th>Risk</th><th>Likelihood</th><th>Impact</th><th>Mitigation</th></tr></thead>
+      <tbody>
+        <tr><td>Scope creep (too many features at once)</td><td class="risk-high">High</td><td class="risk-high">High</td><td>Strictly follow sprint backlog; defer new features to next sprint; use MoSCoW prioritization</td></tr>
+        <tr><td>Payment gateway integration delays (bKash/Shurjopay API docs)</td><td class="risk-med">Medium</td><td class="risk-high">High</td><td>Start payment integration research in Sprint 2 even if coding in Sprint 10; get sandbox credentials early</td></tr>
+        <tr><td>Feature toggle complexity (tenant isolation)</td><td class="risk-med">Medium</td><td class="risk-high">High</td><td>Design and test feature_toggles system thoroughly in Sprint 1; write automated tests from the start</td></tr>
+        <tr><td>Multi-tenant data leakage between tenants</td><td class="risk-low">Low</td><td class="risk-high">Critical</td><td>Code review all queries for tenant scoping; use Laravel global scopes; automated security tests</td></tr>
+        <tr><td>Performance under load (60+ table joins)</td><td class="risk-med">Medium</td><td class="risk-med">Medium</td><td>Add indexes early; use Eager Loading (Eloquent); Redis caching for product catalog; Sprint 17 load test</td></tr>
+        <tr><td>Developer unavailability / turnover</td><td class="risk-low">Low</td><td class="risk-high">High</td><td>Thorough code documentation; Docker dev environment so any dev can onboard in 1 day; Git commit discipline</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- DEFINITION OF DONE -->
+  <div class="section">
+    <div class="section-header">
+      <div class="section-icon icon-green">✅</div>
+      <div><div class="section-title">Definition of Done & Agile Ceremonies</div>
+      <div class="section-subtitle">Quality gates and team rituals</div></div>
+    </div>
+    <div style="display:grid; grid-template-columns:1fr 1fr; gap:20px;">
+      <div>
+        <h3>Definition of Done (per story)</h3>
+        <ul class="panel-list" style="margin-top:8px;">
+          <li>Code reviewed by at least 1 other developer</li>
+          <li>Unit/feature tests written and passing</li>
+          <li>API endpoint documented in Postman collection</li>
+          <li>No critical Laravel debugbar SQL warnings</li>
+          <li>Feature toggle respected (premium features gated)</li>
+          <li>Responsive on mobile (375px) and desktop (1280px)</li>
+          <li>Merged to main branch via Pull Request</li>
+        </ul>
+      </div>
+      <div>
+        <h3>Agile Ceremonies</h3>
+        <ul class="panel-list" style="margin-top:8px;">
+          <li><strong>Daily Standup:</strong> 15 min — What did I do? What will I do? Blockers?</li>
+          <li><strong>Sprint Planning:</strong> Day 1 of each sprint — pick stories from backlog</li>
+          <li><strong>Sprint Review:</strong> Day 10 — demo working software to stakeholder</li>
+          <li><strong>Retrospective:</strong> Day 10 — What went well? What to improve?</li>
+          <li><strong>Backlog Grooming:</strong> Mid-sprint — refine upcoming stories</li>
+          <li><strong>Tools:</strong> GitHub Projects (Kanban), Slack/Discord for communication</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- QUICK ESTIMATES -->
+  <div class="section">
+    <div class="section-header">
+      <div class="section-icon icon-orange">📊</div>
+      <div><div class="section-title">Summary Estimates</div></div>
+    </div>
+    <table>
+      <thead><tr><th>Item</th><th>Estimate</th><th>Notes</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Total Development Time</strong></td><td>~180 working days (6 months)</td><td>With 3 full-time developers, parallel work</td></tr>
+        <tr><td><strong>MVP (Free Core Only)</strong></td><td>~60–80 days</td><td>Sprints 1–8: working open-source e-commerce</td></tr>
+        <tr><td><strong>Full Platform with Premium Features</strong></td><td>~180 days</td><td>All 18 sprints complete</td></tr>
+        <tr><td><strong>Recommended Hosting (start)</strong></td><td>DigitalOcean $24–48/mo</td><td>Scale up as tenants grow</td></tr>
+        <tr><td><strong>Recommended Hosting (scale)</strong></td><td>AWS $80–200/mo</td><td>After 100+ active tenants</td></tr>
+        <tr><td><strong>Open-Source License</strong></td><td>MIT or GPL-3.0</td><td>MIT for maximum adoption; GPL if you want copyleft</td></tr>
+        <tr><td><strong>GitHub Repo Structure</strong></td><td>Monorepo (backend/ + frontend/)</td><td>Or separate repos with a meta-repo</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="doc-footer">
+    <strong>E-Commerce Platform · Agile Project Plan v1.0</strong><br>
+    Laravel 11 · React 18 · Tailwind CSS · MySQL 8 · 3 Developers · ~180 Days · 18 Sprints<br>
+    <span style="color:#e94560;">Prepared: February 2026</span><br><br>
+    Designed by <a href="https://www.linkedin.com/in/ahasan39/" target="_blank" style="color:#e94560; text-decoration:none; font-weight:600;">Ahasan39</a> | <a href="https://www.linkedin.com/in/ahasan39/" target="_blank" style="color:#0f3460; text-decoration:none;">Amamul Ahasan | Full Stack Web Developer - Laravel, Vue.js, React Expert | Bangladesh</a>
+  </div>
+
+</div>
+</body>
+</html>
